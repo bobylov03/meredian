@@ -80,7 +80,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 }
 .rail__logo{display:block;margin-bottom:30px}
 .rail__logo img{width:188px;filter:brightness(0) invert(1)}
-.rail nav{flex:1}
+.rail nav{flex:1;overflow-y:auto;min-height:0}
 .rail nav a{
   position:relative;display:block;padding:12px 0 12px 18px;
   border-top:1px solid var(--on-navy-line);
@@ -433,6 +433,65 @@ h3{font-size:1.25rem;line-height:1.25;letter-spacing:-.01em;font-weight:600}
 .card__seg i{transition:background .45s var(--e)}
 .card.is-near .card__seg i.on{background:var(--brass-hi)}
 
+
+/* ═══════ SET PIECE 3 — does the notice even start the clock ═══════ */
+.gates{position:relative;padding-left:40px;margin-top:4px;max-width:960px}
+.gates__rail{position:absolute;left:11px;top:14px;bottom:14px;width:2px;background:var(--line)}
+.gates__fill{position:absolute;left:11px;top:14px;width:2px;background:var(--brass-g);
+  height:var(--h,0px);transition:height .5s var(--e),background .3s var(--e)}
+.gates.bad .gates__fill{background:#A3341F}
+.gate{position:relative;display:grid;grid-template-columns:1fr auto;gap:4px 18px;
+  align-items:center;padding:15px 0;border-bottom:1px solid var(--line)}
+.gate:first-of-type{border-top:1px solid var(--line)}
+.gate__dot{position:absolute;left:-35px;top:50%;width:16px;height:16px;margin-top:-8px;
+  border-radius:50%;background:var(--white);border:2px solid var(--line);
+  transition:border-color .35s var(--e),background .35s var(--e)}
+.gate.ok .gate__dot{border-color:var(--brass-g);background:var(--brass-g)}
+.gate.no .gate__dot{border-color:#A3341F;background:#A3341F}
+.gate h3{font-size:1.0625rem;font-weight:600;letter-spacing:-.005em}
+.gate p{grid-column:1/2;font-size:.875rem;line-height:1.6;color:var(--muted);max-width:52ch}
+.gate.no h3{color:#A3341F}
+.sw{grid-row:1/3;grid-column:2/3;display:inline-flex;align-items:center;gap:9px;min-height:44px;
+  font:700 .625rem/1 var(--ff);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.sw i{display:block;width:44px;height:26px;border-radius:13px;background:var(--p3);
+  border:1px solid var(--line);position:relative;transition:background .3s var(--e),border-color .3s var(--e)}
+.sw i::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;
+  background:var(--white);box-shadow:0 1px 2px rgba(11,41,75,.3);transition:transform .3s var(--e)}
+.sw[aria-checked="true"] i{background:var(--brass-g);border-color:var(--brass-g)}
+.sw[aria-checked="true"] i::after{transform:translateX(18px)}
+.sw[aria-checked="true"]{color:var(--brass)}
+
+.verdict{margin-top:26px;border:1px solid var(--line);padding:22px 24px;background:var(--white);
+  border-left:5px solid var(--brass-g);transition:border-color .35s var(--e)}
+.verdict.bad{border-left-color:#A3341F}
+.verdict b{display:block;font:700 .6875rem/1 var(--ff);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--brass);margin-bottom:10px;transition:color .35s var(--e)}
+.verdict.bad b{color:#A3341F}
+.verdict p{font-size:clamp(1rem,1.4vw,1.1875rem);line-height:1.6;color:var(--ink);max-width:58ch}
+.verdict small{display:block;margin-top:10px;font-size:.8125rem;color:var(--muted);line-height:1.6}
+
+/* ═══════ the statement of facts under the laytime chart ═══════ */
+.sof{margin-top:26px;border:1px solid var(--line);background:var(--white)}
+.sof__r{display:grid;grid-template-columns:1fr auto;gap:2px 14px;padding:11px 16px;
+  border-bottom:1px solid var(--line);opacity:.32;transition:opacity .4s var(--e),background .4s var(--e)}
+.sof__r:last-child{border-bottom:0}
+.sof__r.lit{opacity:1}
+.sof__r.lit.is-count{background:rgba(184,137,60,.09)}
+.sof__r.lit.is-dem{background:rgba(163,52,31,.09)}
+@media(min-width:760px){
+  .sof__r{grid-template-columns:152px minmax(0,1fr) 76px 108px;gap:0 18px;align-items:center}
+}
+.sof__t{font:500 .75rem/1.4 var(--mono);color:var(--muted);white-space:nowrap}
+.sof__e{font-size:.9375rem;font-weight:500}
+.sof__d{font:600 .8125rem/1.4 var(--mono);color:var(--ink);font-variant-numeric:tabular-nums}
+.sof__c{font:700 .5625rem/1.3 var(--ff);letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.sof__r.is-count .sof__c{color:var(--brass)}
+.sof__r.is-dem .sof__c{color:#A3341F}
+@media(min-width:760px){.sof__d,.sof__c{text-align:right}}
+@media(max-width:759px){
+  .sof__e{grid-column:1/2}.sof__d{grid-column:2/3;grid-row:1/2}.sof__c{grid-column:1/3}
+}
+
 /* ═══════ ACCOUNT — flat ledger ═══════ */
 .led{border:1px solid var(--line)}
 .led__r{display:grid;grid-template-columns:32px 1fr;gap:4px 12px;align-items:baseline;
@@ -546,6 +605,7 @@ h3{font-size:1.25rem;line-height:1.25;letter-spacing:-.01em;font-weight:600}
   .js .tabs__pane>*{animation:none}
   .fl input,.fl textarea{transition:none}
   .seg i{transform:scaleX(1)!important}
+  .sof__r{opacity:1}
   .seg b,.lay__mk{opacity:1!important}
   .lay__head{display:none}
 }
@@ -574,6 +634,7 @@ h3{font-size:1.25rem;line-height:1.25;letter-spacing:-.01em;font-weight:600}
       <li><a href="#position">Position</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#voyage">The voyage</a></li>
+      <li><a href="#notice">Notice of readiness</a></li>
       <li><a href="#laytime">Laytime</a></li>
       <li><a href="#account">Voyage account</a></li>
       <li><a href="#terms">Terms of engagement</a></li>
@@ -915,47 +976,115 @@ h3{font-size:1.25rem;line-height:1.25;letter-spacing:-.01em;font-weight:600}
   </div>
 </section>
 
+<!-- ═══════ NOTICE OF READINESS ═══════ -->
+<section class="band band--tint pad" id="notice">
+  <div class="head">
+    <p class="kicker up2">Notice of readiness</p>
+    <h2 class="up">Four questions decide whether the clock starts at all.</h2>
+    <p class="lead up2">Tender a notice that fails any one of them and it is a bad notice. Laytime
+    does not begin, and every hour until a good notice is given belongs to the owner. Switch one
+    off and watch what happens.</p>
+  </div>
+
+  <div class="gates up2" id="gates">
+    <span class="gates__rail" aria-hidden="true"></span>
+    <span class="gates__fill" id="gates-fill" aria-hidden="true"></span>
+
+    <div class="gate ok" data-g="0">
+      <span class="gate__dot" aria-hidden="true"></span>
+      <h3>An arrived ship</h3>
+      <button class="sw" role="switch" aria-checked="true" type="button"><i aria-hidden="true"></i><span>Yes</span></button>
+      <p>At the place the charter party names — the berth on a berth charter, the usual waiting
+      place on a port charter. Lying outside it is not arrived.</p>
+    </div>
+
+    <div class="gate ok" data-g="1">
+      <span class="gate__dot" aria-hidden="true"></span>
+      <h3>Ready in every respect</h3>
+      <button class="sw" role="switch" aria-checked="true" type="button"><i aria-hidden="true"></i><span>Yes</span></button>
+      <p>Tanks inspected and accepted, cargo system lined up, free pratique granted and customs
+      cleared. Readiness that is only partial is not readiness.</p>
+    </div>
+
+    <div class="gate ok" data-g="2">
+      <span class="gate__dot" aria-hidden="true"></span>
+      <h3>Tendered as the contract requires</h3>
+      <button class="sw" role="switch" aria-checked="true" type="button"><i aria-hidden="true"></i><span>Yes</span></button>
+      <p>In writing, to the party the charter party names, by the means it specifies. A notice to
+      the agent when the clause says charterer is a notice to nobody.</p>
+    </div>
+
+    <div class="gate ok" data-g="3">
+      <span class="gate__dot" aria-hidden="true"></span>
+      <h3>Inside the laycan and the permitted hours</h3>
+      <button class="sw" role="switch" aria-checked="true" type="button"><i aria-hidden="true"></i><span>Yes</span></button>
+      <p>Before the cancelling date, and within whatever hours the clause allows. Outside them the
+      notice simply waits for the window to open.</p>
+    </div>
+  </div>
+
+  <div class="verdict up2" id="verdict">
+    <b id="verdict-tag">The notice bites</b>
+    <p id="verdict-txt">Turn time runs from 00:01 and laytime commences at 06:01 — the calculation
+    below is the one that applies.</p>
+    <small id="verdict-sub">All four conditions are satisfied.</small>
+  </div>
+</section>
+
 <!-- ═══════ LAYTIME PLAYER ═══════ -->
 <section class="band pad" id="laytime">
   <div class="head">
     <p class="kicker up2">Laytime</p>
     <h2 class="up">The clock does not run the way the berth does.</h2>
-    <p class="lead up2">A worked example. The vessel is alongside for 104 hours, but only 60 of
-    them count against laytime — and the difference between those two numbers is the whole job.</p>
+    <p class="lead up2">A worked example on tanker terms, where laytime runs in running hours
+    rather than weather working days. From notice to hoses off is 95 hours 30 minutes; only 72 of
+    them count. The gap between those two figures is the job.</p>
   </div>
 
   <dl class="lay__top up2">
-    <div class="lay__cell"><dt>Elapsed alongside</dt><dd id="lay-elapsed">00:00</dd></div>
+    <div class="lay__cell"><dt>Elapsed since NOR</dt><dd id="lay-elapsed">00:00</dd></div>
     <div class="lay__cell"><dt>Laytime used</dt><dd id="lay-used">00:00</dd></div>
-    <div class="lay__cell"><dt>Laytime allowed</dt><dd>60:00</dd></div>
+    <div class="lay__cell"><dt>Laytime allowed</dt><dd>72:00</dd></div>
     <div class="lay__cell" id="lay-demcell"><dt>On demurrage</dt><dd id="lay-dem">00:00</dd></div>
   </dl>
 
   <div class="lay__chart up2" id="lay-chart">
     <div class="lay__grid" aria-hidden="true">
-      <i style="left:22.222%"><span>DAY 1</span></i>
-      <i style="left:44.444%"><span>DAY 2</span></i>
-      <i style="left:66.667%"><span>DAY 3</span></i>
-      <i style="left:88.889%"><span>DAY 4</span></i>
+      <i style="left:25%"><span>DAY 2</span></i>
+      <i style="left:50%"><span>DAY 3</span></i>
+      <i style="left:75%"><span>DAY 4</span></i>
     </div>
 
     <div class="lay__track" id="lay-track">
-      <div class="seg seg--exc seg--tight" data-a="0"  data-b="6"   style="left:0%;width:5.556%"><i></i><b>Notice time</b></div>
-      <div class="seg seg--count" data-a="6"  data-b="26"  style="left:5.556%;width:18.519%"><i></i><b>Loading</b></div>
-      <div class="seg seg--exc"   data-a="26" data-b="35"  style="left:24.074%;width:8.333%"><i></i><b>Rain</b></div>
-      <div class="seg seg--count" data-a="35" data-b="55"  style="left:32.407%;width:18.519%"><i></i><b>Loading</b></div>
-      <div class="seg seg--exc seg--tight" data-a="55" data-b="60"  style="left:50.926%;width:4.630%"><i></i><b>Shifting</b></div>
-      <div class="seg seg--count" data-a="60" data-b="80"  style="left:55.556%;width:18.519%"><i></i><b>Loading</b></div>
-      <div class="seg seg--dem"   data-a="80" data-b="104" style="left:74.074%;width:22.222%"><i></i><b>On demurrage</b></div>
+      <div class="seg seg--exc seg--tight" data-a="1"    data-b="361"  style="left:0.017%;width:6.250%"><i></i><b>Turn time</b></div>
+      <div class="seg seg--count seg--tight" data-a="361"  data-b="510"  style="left:6.267%;width:2.587%"><i></i><b>Waiting</b></div>
+      <div class="seg seg--exc seg--tight" data-a="510"  data-b="660"  style="left:8.854%;width:2.604%"><i></i><b>Inward passage</b></div>
+      <div class="seg seg--count" data-a="660"  data-b="2460" style="left:11.458%;width:31.250%"><i></i><b>All fast &middot; hoses &middot; documents</b></div>
+      <div class="seg seg--exc seg--tight" data-a="2460" data-b="2700" style="left:42.708%;width:4.167%"><i></i><b>Pump stoppage</b></div>
+      <div class="seg seg--count" data-a="2700" data-b="5071" style="left:46.875%;width:41.163%"><i></i><b>Loading</b></div>
+      <div class="seg seg--dem"   data-a="5071" data-b="5731" style="left:88.038%;width:11.458%"><i></i><b>On demurrage</b></div>
       <div class="lay__head" id="lay-head" aria-hidden="true"></div>
     </div>
 
     <div class="lay__marks" aria-hidden="true">
-      <div class="lay__mk lay__mk--start" data-at="0" style="left:0%"><em></em><span>NOR tendered</span></div>
-      <div class="lay__mk lay__mk--key lay__mk--low" data-at="6" style="left:5.556%"><em></em><span>Laytime commences</span></div>
-      <div class="lay__mk lay__mk--key" data-at="80" style="left:74.074%"><em></em><span>Laytime expires</span></div>
-      <div class="lay__mk lay__mk--dem lay__mk--end" data-at="104" style="left:96.296%"><em></em><span>Completed</span></div>
+      <div class="lay__mk lay__mk--start" data-at="1" style="left:0.017%"><em></em><span>NOR 00:01</span></div>
+      <div class="lay__mk lay__mk--key lay__mk--low" data-at="361" style="left:6.267%"><em></em><span>Laytime commences 06:01</span></div>
+      <div class="lay__mk lay__mk--key" data-at="5071" style="left:88.038%"><em></em><span>Laytime expires</span></div>
+      <div class="lay__mk lay__mk--dem lay__mk--end" data-at="5731" style="left:99.497%"><em></em><span>Hoses off</span></div>
     </div>
+  </div>
+
+
+  <div class="sof up2" id="sof" aria-label="Statement of facts">
+    <div class="sof__r" data-to="1"><p class="sof__t">D1 00:01</p><p class="sof__e">NOR tendered at anchorage</p><p class="sof__d">&mdash;</p><p class="sof__c">Notice</p></div>
+    <div class="sof__r" data-to="361"><p class="sof__t">D1 00:01 &ndash; 06:01</p><p class="sof__e">Turn time</p><p class="sof__d">06:00</p><p class="sof__c">Does not count</p></div>
+    <div class="sof__r is-count" data-to="510"><p class="sof__t">D1 06:01 &ndash; 08:30</p><p class="sof__e">Waiting at anchorage</p><p class="sof__d">02:29</p><p class="sof__c">Counts</p></div>
+    <div class="sof__r" data-to="660"><p class="sof__t">D1 08:30 &ndash; 11:00</p><p class="sof__e">Inward passage</p><p class="sof__d">02:30</p><p class="sof__c">Does not count</p></div>
+    <div class="sof__r is-count" data-to="2460"><p class="sof__t">D1 11:00 &ndash; D2 17:00</p><p class="sof__e">All fast, hoses connected, documents</p><p class="sof__d">30:00</p><p class="sof__c">Counts</p></div>
+    <div class="sof__r" data-to="2700"><p class="sof__t">D2 17:00 &ndash; 21:00</p><p class="sof__e">Stoppage &mdash; vessel&rsquo;s cargo pump</p><p class="sof__d">04:00</p><p class="sof__c">Does not count</p></div>
+    <div class="sof__r is-count" data-to="5071"><p class="sof__t">D2 21:00 &ndash; D4 12:31</p><p class="sof__e">Loading resumed</p><p class="sof__d">39:31</p><p class="sof__c">Counts</p></div>
+    <div class="sof__r" data-to="5071"><p class="sof__t">D4 12:31</p><p class="sof__e">Laytime expires &mdash; 72:00 used</p><p class="sof__d">&mdash;</p><p class="sof__c">Expiry</p></div>
+    <div class="sof__r is-dem" data-to="5731"><p class="sof__t">D4 12:31 &ndash; 23:31</p><p class="sof__e">On demurrage until hoses disconnected</p><p class="sof__d">11:00</p><p class="sof__c">Demurrage</p></div>
   </div>
 
   <div class="lay__ctl up2">
@@ -963,9 +1092,9 @@ h3{font-size:1.25rem;line-height:1.25;letter-spacing:-.01em;font-weight:600}
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/></svg>
       Replay
     </button>
-    <p>The hatched blocks — notice time, rain and shifting berth — are excepted under the charter
-    party, so the clock stops. Miss one of them in the calculation and the owner pays for time that
-    was never his.</p>
+    <p>The hatched blocks do not count: six hours of turn time after the notice, the inward
+    passage from anchorage to berth, and a stoppage on the vessel's own cargo pump. Miss any one
+    of them in the calculation and somebody pays for time that was never theirs.</p>
   </div>
 </section>
 
@@ -1188,7 +1317,7 @@ addEventListener("resize",onScroll,{passive:true});
 sweep();onScroll();
 
 if("IntersectionObserver" in window){
-  var secs=["overview","position","services","voyage","laytime","account","terms","contact"]
+  var secs=["overview","position","services","voyage","notice","laytime","account","terms","contact"]
     .map(function(i){return document.getElementById(i)}).filter(Boolean);
   var nio=new IntersectionObserver(function(es){
     es.forEach(function(en){
@@ -1417,6 +1546,63 @@ if(strip){
   paintSun();setInterval(paintSun,30000);
 })();
 
+/* ══════ SET PIECE 3 — is the notice good enough to start the clock ══════
+   Four conditions in series. The first one switched off stops the chain,
+   because in law a bad notice is not a late notice: it is no notice. */
+(function(){
+  var wrap=$("#gates");if(!wrap)return;
+  var gates=$$(".gate",wrap),fill=$("#gates-fill"),
+      verdict=$("#verdict"),tag=$("#verdict-tag"),txt=$("#verdict-txt"),sub=$("#verdict-sub");
+  var BAD=[
+    "The vessel is not an arrived ship, so there is nothing to give notice of. Laytime cannot begin and the waiting is on the owner's account.",
+    "She is not ready, so the notice is a nullity. It does not cure itself when she becomes ready \u2014 a fresh notice has to be tendered.",
+    "The notice did not go the way the charter party requires, so in law it was not given at all.",
+    "Tendered outside the laycan or the permitted hours, the notice simply waits. And if the cancelling date has gone, the charterer may walk away from the fixture."
+  ];
+  function paint(){
+    var firstBad=-1;
+    gates.forEach(function(g,i){
+      var on=$(".sw",g).getAttribute("aria-checked")==="true";
+      if(!on&&firstBad<0)firstBad=i;
+    });
+    gates.forEach(function(g,i){
+      var on=$(".sw",g).getAttribute("aria-checked")==="true";
+      g.classList.toggle("no",!on&&i===firstBad);
+      g.classList.toggle("ok",on&&(firstBad<0||i<firstBad));
+    });
+    var stop=gates[firstBad<0?gates.length-1:firstBad];
+    if(fill&&stop)fill.style.setProperty("--h",Math.max(0,stop.offsetTop+stop.offsetHeight/2-14)+"px");
+    wrap.classList.toggle("bad",firstBad>=0);
+    verdict.classList.toggle("bad",firstBad>=0);
+    if(firstBad<0){
+      tag.textContent="The notice bites";
+      txt.textContent="Turn time runs from 00:01 and laytime commences at 06:01 \u2014 the calculation below is the one that applies.";
+      sub.textContent="All four conditions are satisfied.";
+    }else{
+      tag.textContent="Bad notice";
+      txt.textContent=BAD[firstBad];
+      sub.textContent="Every hour from here is on the owner's account until a good notice is tendered.";
+    }
+  }
+  gates.forEach(function(g){
+    var sw=$(".sw",g),lbl=$("span",sw);
+    sw.addEventListener("click",function(){
+      var on=sw.getAttribute("aria-checked")!=="true";
+      sw.setAttribute("aria-checked",String(on));
+      lbl.textContent=on?"Yes":"No";
+      paint();
+    });
+  });
+  addEventListener("resize",paint,{passive:true});
+  paint();
+  if("IntersectionObserver" in window){
+    var io2=new IntersectionObserver(function(es){
+      es.forEach(function(en){if(en.isIntersecting){paint();io2.disconnect()}});
+    },{threshold:.2});
+    io2.observe(wrap);
+  }
+})();
+
 /* ══════ SET PIECE 2 — the laytime player ══════
    One worked calculation, played out: the head sweeps the elapsed
    axis, counted segments fill, excepted ones do not, and the counters
@@ -1426,9 +1612,11 @@ if(strip){
   var segs=$$(".seg",chart),marks=$$(".lay__mk",chart),head=$("#lay-head"),
       elapsedEl=$("#lay-elapsed"),usedEl=$("#lay-used"),demEl=$("#lay-dem"),
       demCell=$("#lay-demcell"),replay=$("#lay-replay");
-  var TOTAL=108,EXPIRES=80,DUR=7200,raf=null,t0=0;
-  function hhmm(h){
-    var m=Math.round(h*60),H=Math.floor(m/60),M=m%60;
+  /* everything is in minutes from midnight on day one */
+  var TOTAL=5760,NOR=1,EXPIRES=5071,DONE=5731,DUR=8200,raf=null,t0=0;
+  var sof=$$(".sof__r");
+  function hhmm(mins){
+    var m=Math.max(0,Math.round(mins)),H=Math.floor(m/60),M=m%60;
     return (H<10?"0":"")+H+":"+(M<10?"0":"")+M;
   }
   function usedAt(t){
@@ -1449,9 +1637,10 @@ if(strip){
     });
     marks.forEach(function(m){m.classList.toggle("lit",t>=+m.dataset.at)});
     if(head){head.style.left=(t/TOTAL*100).toFixed(3)+"%";head.classList.toggle("on",t>0&&t<TOTAL)}
-    elapsedEl.textContent=hhmm(Math.min(t,104));
+    sof.forEach(function(r){r.classList.toggle("lit",t>=+r.dataset.to)});
+    elapsedEl.textContent=hhmm(Math.min(t,DONE)-NOR);
     usedEl.textContent=hhmm(usedAt(t));
-    var dem=Math.max(0,Math.min(t,104)-EXPIRES);
+    var dem=Math.max(0,Math.min(t,DONE)-EXPIRES);
     demEl.textContent=hhmm(dem);
     demCell.classList.toggle("is-dem",dem>0);
   }
