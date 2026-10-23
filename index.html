@@ -242,6 +242,7 @@ h3{font-size:1.25rem;line-height:1.25;letter-spacing:-.01em;font-weight:600}
 @keyframes bl{0%,62%{opacity:1}63%,100%{opacity:.25}}
 .board__row{display:grid;grid-template-columns:1fr auto auto;gap:10px 12px;align-items:center;
   padding:13px 18px;border-bottom:1px solid var(--on-navy-line)}
+.board__row.is-ours{box-shadow:inset 3px 0 0 var(--brass-hi);background:rgba(224,181,103,.05)}
 .board__city{font-size:.9375rem;font-weight:500;color:var(--white)}
 .board__city small{display:block;font:400 .6875rem/1.4 var(--ff);color:var(--on-navy-mut)}
 .flaps{display:flex;gap:2px}
@@ -683,49 +684,50 @@ h3{font-size:1.25rem;line-height:1.25;letter-spacing:-.01em;font-weight:600}
       </div>
       <dl class="hero__meta stg">
         <div><dt>Acting for</dt><dd>Owners only</dd></div>
-        <div><dt>Coverage</dt><dd>Four windows, one day</dd></div>
+        <div><dt>Desk</dt><dd>Dubai &middot; GST</dd></div>
         <div><dt>Commissions</dt><dd>Disclosed in full</dd></div>
       </dl>
     </div>
 
     <div class="board up2">
       <div class="board__hd">
-        <p>Desk coverage</p>
+        <p>Our desk, and the markets it reaches</p>
         <b><span class="dot" aria-hidden="true"></span>LIVE</b>
       </div>
-      <div class="board__row">
-        <p class="board__city">Singapore<small>Asia &amp; Far East</small></p>
-        <div class="flaps" data-tz="Asia/Singapore" aria-hidden="true"></div>
-        <p class="state" data-st="Asia/Singapore">—</p>
-      </div>
-      <div class="board__row">
-        <p class="board__city">Dubai<small>Gulf &amp; Indian Ocean</small></p>
+      <div class="board__row is-ours">
+        <p class="board__city">Dubai<small>Our desk &middot; GST</small></p>
         <div class="flaps" data-tz="Asia/Dubai" aria-hidden="true"></div>
         <p class="state" data-st="Asia/Dubai">—</p>
       </div>
       <div class="board__row">
-        <p class="board__city">London<small>Atlantic &amp; Baltic</small></p>
+        <p class="board__city">Singapore<small>Far East market</small></p>
+        <div class="flaps" data-tz="Asia/Singapore" aria-hidden="true"></div>
+        <p class="state" data-st="Asia/Singapore">—</p>
+      </div>
+      <div class="board__row">
+        <p class="board__city">London<small>Atlantic &amp; Baltic market</small></p>
         <div class="flaps" data-tz="Europe/London" aria-hidden="true"></div>
         <p class="state" data-st="Europe/London">—</p>
       </div>
       <div class="board__row">
-        <p class="board__city">Houston<small>US Gulf &amp; Americas</small></p>
+        <p class="board__city">Houston<small>US Gulf market</small></p>
         <div class="flaps" data-tz="America/Chicago" aria-hidden="true"></div>
         <p class="state" data-st="America/Chicago">—</p>
       </div>
-      <p class="board__ft">Working windows 08:00–18:00 local. Outside them a duty number is answered.</p>
+      <p class="board__ft">Dubai office hours 08:00&ndash;18:00 GST. One working day here runs
+      alongside the Far East all morning and Europe all afternoon.</p>
     </div>
   </div>
 </section>
 
 <!-- ═══════ SUN BAND ═══════ -->
-<section class="sun pad" aria-label="Day and night across the desks we cover">
+<section class="sun pad" aria-label="Day and night, and where the desk sits">
   <div class="sun__hd">
     <p>Day and night, right now</p>
     <b><span id="sun-utc">--:--</span> UTC</b>
   </div>
   <svg viewBox="0 0 1440 150" preserveAspectRatio="none" role="img"
-       aria-label="A longitude strip showing where it is currently day and night, with our four working windows marked.">
+       aria-label="A longitude strip showing where it is currently day and night, with the Dubai desk and the main market centres marked.">
     <rect class="sun-night" x="0" y="0" width="1440" height="110"/>
     <rect class="sun-day" id="sun-d1" x="0" y="0" width="0" height="110"/>
     <rect class="sun-day" id="sun-d2" x="0" y="0" width="0" height="110"/>
@@ -1154,8 +1156,8 @@ h3{font-size:1.25rem;line-height:1.25;letter-spacing:-.01em;font-weight:600}
       lawyers. We would rather make an uncomfortable call on the day than present a tidy summary
       a month later.</li>
     <li class="up2"><b>SIX</b>Each vessel has one named operator and one named alternate, both
-      reachable through the trading day. You will not be routed to a general inbox during a
-      casualty.</li>
+      reachable through the working day. You will not be routed to a general inbox when something
+      goes wrong.</li>
   </ol>
 </section>
 
@@ -1505,16 +1507,18 @@ if(strip){
       desksG=$("#sun-desks"),utcEl=$("#sun-utc");
   if(!svgD1)return;
   var NS="http://www.w3.org/2000/svg",W=1440;
+  /* one desk, in Dubai. The others are market centres, shown for reference. */
   var DESKS=[{n:"HOUSTON",lon:-95.4,tz:"America/Chicago"},
              {n:"LONDON", lon:0,     tz:"Europe/London"},
-             {n:"DUBAI",  lon:55.3,  tz:"Asia/Dubai"},
+             {n:"DUBAI \u00B7 DESK", lon:55.3, tz:"Asia/Dubai", ours:true},
              {n:"SINGAPORE",lon:103.8,tz:"Asia/Singapore"}];
   var x=function(lon){return (lon+180)/360*W};
   DESKS.forEach(function(d){
     var g=document.createElementNS(NS,"g");
     var l=document.createElementNS(NS,"line");
     l.setAttribute("class","sun-mark");l.setAttribute("x1",x(d.lon));l.setAttribute("x2",x(d.lon));
-    l.setAttribute("y1",84);l.setAttribute("y2",110);
+    l.setAttribute("y1",d.ours?68:84);l.setAttribute("y2",110);
+    if(d.ours)l.setAttribute("stroke-width","4");
     var t=document.createElementNS(NS,"text");
     t.setAttribute("class","sun-city");t.setAttribute("x",x(d.lon));t.setAttribute("y",134);
     t.setAttribute("text-anchor",x(d.lon)<90?"start":(x(d.lon)>W-110?"end":"middle"));
@@ -1537,7 +1541,7 @@ if(strip){
     solar.setAttribute("transform","translate("+(x(sub)-720)+" 0)");
     DESKS.forEach(function(d){
       var t=timeIn(d.tz);var h=t?parseInt(t.slice(0,2),10):-1;
-      var open=h>=8&&h<18;
+      var open=d.ours||(h>=8&&h<18);   /* our own mark always reads as ours */
       d.line.classList.toggle("on",open);
       d.text.classList.toggle("on",open);
     });
